@@ -5,13 +5,13 @@
 #include<math.h>
 #define num 100
 int i;
-float average;
-int vol;
-float real;
-float res;
-float temp;
-short tempr[num];
-float sum =0;
+double average;
+double vol;
+double real;
+double res;
+double temp;
+double tempr[num];
+double sum =0;
 
 I2CLiquidCrystal lcd(60, (bool)true);
 
@@ -49,10 +49,10 @@ for (i = 9; i > 0; i--) {
  if(temp > 35.0){
    tempr[0] = temp;  // 温度を格納
    tempr[i] = tempr[i-1];
-   Serial.println(tempr[i]);
+   //Serial.println(tempr[i]);
  }else{
    tempr[i] = tempr[i];
-   Serial.println(tempr[i]);
+   //Serial.println(tempr[i]);
  } 
 }
 
@@ -62,7 +62,15 @@ for (i = 0; i < 10;i++) {
 
 average = sum / 10;
 
-lcd.print(average - 0.6);
+if((average - temp) < 0.5){
+  lcd.print(average - 0.6);
+}else{
+  lcd.print("stay");
+}
+Serial.println(temp);
+Serial.print(",");
+Serial.println(average);
+//lcd.print(average - 0.6);
 
 delay(1000);
 
